@@ -104,11 +104,12 @@
         /* Textarea styles - black background with white text */
         #textArea {
             box-sizing: border-box;
+            line-height: 1.5;
             border-radius: 4px;
             width: 100%;
             height: 200px;
             margin-bottom: 0;
-            font-size: 1rem;
+            font-size: 12px;
             background-color: #1e1e1e;
             color: #fff;
             border: none;
@@ -794,7 +795,7 @@
       if (cursorHorizontalPos < currentScrollLeft + paddingLeft) {
         console.log('111 => ')
         // 光标在可视区域左侧，向左滚动
-        textArea.scrollLeft = cursorHorizontalPos - paddingLeft - 15;
+        textArea.scrollLeft = cursorHorizontalPos - paddingLeft - 30;
         // textArea.scrollLeft = 0;
       } else if (cursorHorizontalPos > currentScrollLeft + visibleWidth - fontSize * 5) {
         console.log('2222 => ')
