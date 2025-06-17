@@ -2,884 +2,914 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>App</title>
-    <style>
-        body {
-            height: 100vh;
-            background: #1e1e1e;
-            margin: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App</title>
+  <style>
+    body {
+      height: 100vh;
+      background: #1e1e1e;
+      margin: 0;
+    }
 
-        .container {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+    .container {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-        .tab-header {
-            display: flex;
-            align-items: center;
-            border-top: 2px solid #444;
-            border-bottom: 2px solid #444;
-        }
+    .tab-header {
+      display: flex;
+      align-items: center;
+      border-top: 2px solid #444;
+      border-bottom: 2px solid #444;
+    }
 
-        .tab-buttons-container {
-            flex: 1;
-            overflow-x: auto;
-            white-space: nowrap;
-            background: #333333;
-        }
+    .tab-buttons-container {
+      flex: 1;
+      overflow-x: auto;
+      white-space: nowrap;
+      background: #333333;
+    }
 
-        .tab-buttons-container::-webkit-scrollbar {
-            height: 6px;
-        }
+    .tab-buttons-container::-webkit-scrollbar {
+      height: 6px;
+    }
 
-        .tab-buttons-container::-webkit-scrollbar-thumb {
-            background-color: #888;
-            border-radius: 3px;
-        }
+    .tab-buttons-container::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 3px;
+    }
 
-        .tab-buttons-container::-webkit-scrollbar-track {
-            background-color: #f1f1f1;
-            border-radius: 3px;
-        }
+    .tab-buttons-container::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+      border-radius: 3px;
+    }
 
-        .tab-actions {
-            display: flex;
-            margin-left: 10px;
-            white-space: nowrap;
-        }
+    .tab-actions {
+      display: flex;
+      margin-left: 10px;
+      white-space: nowrap;
+    }
 
-        .tab-header::-webkit-scrollbar {
-            height: 6px;
-        }
+    .tab-header::-webkit-scrollbar {
+      height: 6px;
+    }
 
-        .tab-header::-webkit-scrollbar-thumb {
-            background-color: #888;
-            border-radius: 3px;
-        }
+    .tab-header::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 3px;
+    }
 
-        .tab-header::-webkit-scrollbar-track {
-            background-color: #f1f1f1;
-            border-radius: 3px;
-        }
+    .tab-header::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+      border-radius: 3px;
+    }
 
-        .tab-button {
-            padding: 0.25rem;
-            /* 调整内边距为关闭按钮留出空间 */
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-            position: relative;
-            background: none;
-            color: #fff;
-            margin-right: 0.5rem;
-            display: flex;
-            /* 使用flex布局排列标题和关闭按钮 */
-            align-items: center;
-            gap: 0;
-        }
+    .tab-button {
+      padding: 0.25rem;
+      /* 调整内边距为关闭按钮留出空间 */
+      cursor: pointer;
+      border: none;
+      font-size: 12px;
+      height: 1.5rem;
+      position: relative;
+      background: none;
+      color: #fff;
+      margin-right: 0.5rem;
+      display: flex;
+      /* 使用flex布局排列标题和关闭按钮 */
+      align-items: center;
+      gap: 0;
+      line-height: 1;
+      transition: 0.1s all;
+    }
 
-        /* 添加关闭按钮样式 */
-        .tab-close-btn {
-            cursor: pointer;
-            padding: 0 0.25rem;
-            font-size: 1rem;
-            opacity: 0.7;
-            border-radius: 2px;
-        }
+    .tab-button.tab-button:hover {
+      background: #252626;
+    }
 
-        .tab-close-btn:hover {
-            opacity: 1;
-            background-color: rgba(255, 255, 255, 0.2);
-        }
+    /* 添加关闭按钮样式 */
+    .tab-close-btn {
+      cursor: pointer;
+      /* padding: 1px; */
+      height: 1em;
+      width: 1em;
+      margin: 0 4px;
+      font-size: 12px;
+      opacity: 0.7;
+      border-radius: 2px;
+      color: #eee5;
+    }
 
-        .tab-button.active {
-            font-family: Arial, Helvetica, sans-serif;
-            color: #b6d685;
-            background-color: #4f5254;
-        }
+    .tab-close-btn:hover {
+      border-radius: 50%;
+      transform: scale(1.2);
+      color: #333;
+      opacity: 1;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
 
-        /* Textarea styles - black background with white text */
-        #textArea {
-            box-sizing: border-box;
-            line-height: 1.5;
-            border-radius: 4px;
-            width: 100%;
-            height: 200px;
-            margin-bottom: 0;
-            font-size: 12px;
-            background-color: #1e1e1e;
-            color: #fff;
-            border: none;
-            resize: none;
-            /* 关闭默认拉伸 */
-            white-space: nowrap; /* 防止文本自动换行 */
-            overflow-x: auto; /* 显示横向滚动条 */
-        }
+    .tab-button.active {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #b6d685;
+      background-color: #4f5254;
+    }
 
-        /* 自定义文本域拉伸器 */
-        .textarea-container {
-            position: relative;
-        }
+    .tab-button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #007bff;
+    }
 
-        .textarea-resizer {
-            opacity: 0;
-            width: 100%;
-            height: 8px;
-            background-color: #333;
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-            cursor: ns-resize;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
 
-        .textarea-resizer::after {
-            content: "";
-            display: block;
-            width: 20px;
-            height: 4px;
-            background-color: #666;
-            border-radius: 2px;
-            margin: 2px auto;
-        }
+    /* Textarea styles - black background with white text */
+    #textArea {
+      box-sizing: border-box;
+      line-height: 1.5;
+      border-radius: 4px;
+      width: 100%;
+      height: 200px;
+      margin-bottom: 0;
+      font-size: 12px;
+      background-color: #1e1e1e;
+      color: #fff;
+      border: none;
+      resize: none;
+      /* 关闭默认拉伸 */
+      white-space: nowrap;
+      /* 防止文本自动换行 */
+      overflow-x: auto;
+      /* 显示横向滚动条 */
+    }
 
-        /* 自定义文本域滚动条样式 */
-        #textArea::-webkit-scrollbar {
-            width: 12px;
-            height: 12px; /* 设置横向滚动条高度 */
-        }
+    /* 自定义文本域拉伸器 */
+    .textarea-container {
+      position: relative;
+    }
 
-        /* 去除右下角白色滑块 */
-        #textArea::-webkit-scrollbar-corner {
-            background-color: #1e1e1e; /* 与文本区域背景色匹配 */
-        }
+    .textarea-resizer {
+      opacity: 0;
+      width: 100%;
+      height: 8px;
+      background-color: #333;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      cursor: ns-resize;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
 
-        #textArea::-webkit-scrollbar-thumb {
-            background-color: #454545;
-            border-radius: 0px;
-        }
+    .textarea-resizer::after {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 4px;
+      background-color: #666;
+      border-radius: 2px;
+      margin: 2px auto;
+    }
 
-        /* 移除文本域选中后的轮廓 */
-        #textArea:focus {
-            outline: none;
-        }
+    /* 自定义文本域滚动条样式 */
+    #textArea::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+      /* 设置横向滚动条高度 */
+    }
 
-        /* 添加行高亮样式 */
-        .line-highlight {
-            position: absolute;
-            left: 0;
-            right: 0;
-            background-color: #2196f333;
-            pointer-events: none;
-            z-index: 0;
-            transition: top 0.1s ease;
-            white-space: nowrap; /* 确保高亮不换行 */
-            width: 100%; /* 默认宽度100% */
-        }
+    /* 去除右下角白色滑块 */
+    #textArea::-webkit-scrollbar-corner {
+      background-color: #1e1e1e;
+      /* 与文本区域背景色匹配 */
+    }
 
-        /* Countdown styles */
-        .countdown-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 95px;
-            width: 100px;
-            padding: 2em;
-            margin: 0 auto;
-            text-align: center;
-            background: #f3f3f3;
-            overflow: hidden;
+    #textArea::-webkit-scrollbar-thumb {
+      background-color: #454545;
+      border-radius: 0px;
+    }
 
-            .closeButton {
-                opacity: 0;
-                transition: opacity 3s ease;
-            }
+    /* 移除文本域选中后的轮廓 */
+    #textArea:focus {
+      outline: none;
+    }
 
-            &:hover {
-                .closeButton {
-                    opacity: 1;
-                    transition: none;
-                }
-            }
-        }
+    /* 添加行高亮样式 */
+    .line-highlight {
+      position: absolute;
+      left: 0;
+      right: 0;
+      background-color: #2196f333;
+      pointer-events: none;
+      z-index: 0;
+      transition: top 0.1s ease;
+      white-space: nowrap;
+      /* 确保高亮不换行 */
+      width: 100%;
+      /* 默认宽度100% */
+    }
 
-        #countdown {
-            font-size: 1.95rem;
-            font-weight: 500;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: #5d5d5d;
-            letter-spacing: 0;
-        }
+    /* Countdown styles */
+    .countdown-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 95px;
+      width: 100px;
+      padding: 2em;
+      margin: 0 auto;
+      text-align: center;
+      background: #f3f3f3;
+      overflow: hidden;
 
-        #actionButton {
-            position: absolute;
-            bottom: 1.5em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-            font-size: 1rem;
-            background-color: #255999;
-            color: white;
-            border: none;
-            cursor: pointer;
+      .closeButton {
+        opacity: 0;
+        transition: opacity 3s ease;
+      }
 
-            svg {
-                width: 12px;
-                height: 12px;
-            }
-        }
-
-        #actionButton:disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-        }
-
+      &:hover {
         .closeButton {
-            position: absolute;
-            top: 0;
-            right: 0;
-            padding: 0.5em 0.7em 0.1em 0.7em;
-            border: none;
-            color: #828282;
-            cursor: pointer;
-
-            svg {
-                width: 20px;
-                height: 20px;
-            }
+          opacity: 1;
+          transition: none;
         }
+      }
+    }
 
-        .closeButton:hover {
-            color: white;
-            background-color: #e81123;
-        }
+    #countdown {
+      font-size: 1.95rem;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #5d5d5d;
+      letter-spacing: 0;
+    }
 
-        .fullButton {
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: 0.5em 0.7em 0.1em 0.7em;
-            border: none;
-            color: #181818;
-            cursor: pointer;
+    #actionButton {
+      position: absolute;
+      bottom: 1.5em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      font-size: 1rem;
+      background-color: #255999;
+      color: white;
+      border: none;
+      cursor: pointer;
 
-            svg {
-                transform: rotate(-90deg);
-                width: 20px;
-                height: 20px;
-            }
-        }
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
 
-        .fullButton:hover {
-            background-color: #bbb;
-        }
+    #actionButton:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
 
-        .tab-rename-input {
-            font-size: 0.75em;
-            color: white;
-            background: #323333;
-        }
+    .closeButton {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0.5em 0.7em 0.1em 0.7em;
+      border: none;
+      color: #828282;
+      cursor: pointer;
 
-        .tab-rename-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 0 #38658b;
-        }
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
 
-        .tab-rename-input + * {
-            display: none;
-        }
+    .closeButton:hover {
+      color: white;
+      background-color: #e81123;
+    }
 
-    </style>
+    .fullButton {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0.5em 0.7em 0.1em 0.7em;
+      border: none;
+      color: #181818;
+      cursor: pointer;
+
+      svg {
+        transform: rotate(-90deg);
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .fullButton:hover {
+      background-color: #bbb;
+    }
+
+    .tab-rename-input {
+      font-size: 0.75em;
+      color: white;
+      background: #323333;
+    }
+
+    .tab-rename-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 0 #38658b;
+    }
+
+    .tab-rename-input+* {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
+  <div class="container">
     <div class="tabs">
-        <div class="tab-header">
-            <div class="tab-buttons-container">
-                <div id="tabButtons"></div>
-            </div>
+      <div class="tab-header">
+        <div class="tab-buttons-container">
+          <div id="tabButtons"></div>
         </div>
-        <!-- 添加文本域容器 -->
-        <div class="textarea-container">
-            <textarea id="textArea" placeholder="在此输入文本..."></textarea>
-            <div class="line-highlight" id="lineHighlight"></div>
-            <div class="textarea-resizer" id="textareaResizer"></div>
+      </div>
+      <!-- 添加文本域容器 -->
+      <div class="textarea-container">
+        <textarea id="textArea" placeholder="在此输入文本..."></textarea>
+        <div class="line-highlight" id="lineHighlight"></div>
+        <div class="textarea-resizer" id="textareaResizer"></div>
+      </div>
+      <div class="countdown-container">
+        <div class="closeButton">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-x-icon lucide-x">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
         </div>
-        <div class="countdown-container">
-            <div class="closeButton">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="lucide lucide-x-icon lucide-x">
-                    <path d="M18 6 6 18" />
-                    <path d="m6 6 12 12" />
-                </svg>
-            </div>
-            <div class="fullButton">
-                <svg t="1749898852105" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                     p-id="17719" width="200" height="200">
-                    <path
-                            d="M469.333333 160a32 32 0 0 0-32-32h-277.333333a32 32 0 0 0-32 32v277.333333a32 32 0 0 0 64 0V237.226667l222.72 222.72a32 32 0 0 0 45.226667-45.226667L237.226667 192h200.106666a32 32 0 0 0 32-32z m362.666667 106.666667a74.666667 74.666667 0 0 0-74.666667-74.666667h-170.666666a32 32 0 1 1 0-64h170.666666A138.666667 138.666667 0 0 1 896 266.666667v490.666666A138.666667 138.666667 0 0 1 757.333333 896H266.666667A138.666667 138.666667 0 0 1 128 757.333333v-170.666666a32 32 0 0 1 64 0v170.666666c0 41.216 33.450667 74.666667 74.666667 74.666667H512v-202.666667A117.333333 117.333333 0 0 1 629.333333 512h202.666667V266.666667z m0 309.333333h-202.666667c-29.44 0-53.333333 23.893333-53.333333 53.333333v202.666667h181.333333a74.666667 74.666667 0 0 0 74.666667-74.666667V576z"
-                            p-id="17720"></path>
-                </svg>
-            </div>
-            <div id="countdown">00:00:10</div>
-            <button id="actionButton">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="lucide lucide-play-icon lucide-play">
-                    <polygon points="6 3 20 12 6 21 6 3" fill="#fff" />
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="lucide lucide-pause-icon lucide-pause" style="display: none;">
-                    <rect x="14" y="4" width="4" height="16" rx="1" />
-                    <rect x="6" y="4" width="4" height="16" rx="1" />
-                </svg>
-            </button>
+        <div class="fullButton">
+          <svg t="1749898852105" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            p-id="17719" width="200" height="200">
+            <path
+              d="M469.333333 160a32 32 0 0 0-32-32h-277.333333a32 32 0 0 0-32 32v277.333333a32 32 0 0 0 64 0V237.226667l222.72 222.72a32 32 0 0 0 45.226667-45.226667L237.226667 192h200.106666a32 32 0 0 0 32-32z m362.666667 106.666667a74.666667 74.666667 0 0 0-74.666667-74.666667h-170.666666a32 32 0 1 1 0-64h170.666666A138.666667 138.666667 0 0 1 896 266.666667v490.666666A138.666667 138.666667 0 0 1 757.333333 896H266.666667A138.666667 138.666667 0 0 1 128 757.333333v-170.666666a32 32 0 0 1 64 0v170.666666c0 41.216 33.450667 74.666667 74.666667 74.666667H512v-202.666667A117.333333 117.333333 0 0 1 629.333333 512h202.666667V266.666667z m0 309.333333h-202.666667c-29.44 0-53.333333 23.893333-53.333333 53.333333v202.666667h181.333333a74.666667 74.666667 0 0 0 74.666667-74.666667V576z"
+              p-id="17720"></path>
+          </svg>
         </div>
+        <div id="countdown">00:00:10</div>
+        <button id="actionButton">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-play-icon lucide-play">
+            <polygon points="6 3 20 12 6 21 6 3" fill="#fff" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-pause-icon lucide-pause" style="display: none;">
+            <rect x="14" y="4" width="4" height="16" rx="1" />
+            <rect x="6" y="4" width="4" height="16" rx="1" />
+          </svg>
+        </button>
+      </div>
     </div>
-</div>
-<script>
-  // DOM Elements
-  const countdownEl = document.getElementById('countdown')
-  const textAreaEl = document.getElementById('textArea')
-  const actionButtonEl = document.getElementById('actionButton')
-  const tabButtonsEl = document.getElementById('tabButtons')
-  const textareaResizer = document.getElementById('textareaResizer')
-  const lineHighlight = document.getElementById('lineHighlight')
+  </div>
+  <script>
+    // DOM Elements
+    const countdownEl = document.getElementById('countdown')
+    const textAreaEl = document.getElementById('textArea')
+    const actionButtonEl = document.getElementById('actionButton')
+    const tabButtonsEl = document.getElementById('tabButtons')
+    const textareaResizer = document.getElementById('textareaResizer')
+    const lineHighlight = document.getElementById('lineHighlight')
 
-  // State
-  let countdownInterval
-  let remainingTime = 10 // Default 10 seconds
-  let tabs = []
-  let activeTabId = null
+    // State
+    let countdownInterval
+    let remainingTime = 10 // Default 10 seconds
+    let tabs = []
+    let activeTabId = null
 
-  // Initialize
-  function init() {
-    loadTabsFromLocalStorage()
-    // 确保只保留一个标签页
-    if (tabs.length === 0 || tabs.length > 1) {
-      tabs = [{ id: Date.now().toString(), title: '文档', content: '' }]
-      saveTabsToLocalStorage()
-    }
-    renderTabs()
-    switchTab(tabs[0].id)
-
-    // 添加文本域拉伸功能
-    let isResizing = false;
-    let startY, startHeight;
-
-    textareaResizer.addEventListener('mousedown', (e) => {
-      isResizing = true;
-      startY = e.clientY;
-      startHeight = textAreaEl.offsetHeight;
-      document.body.style.cursor = 'ns-resize';
-      textAreaEl.style.userSelect = 'none';
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!isResizing) return;
-      const deltaY = e.clientY - startY;
-      const newHeight = Math.max(100, startHeight + deltaY); // 最小高度100px
-      textAreaEl.style.height = `${newHeight}px`;
-    });
-
-    document.addEventListener('mouseup', () => {
-      if (isResizing) {
-        isResizing = false;
-        document.body.style.cursor = '';
-        textAreaEl.style.userSelect = '';
+    // Initialize
+    function init() {
+      loadTabsFromLocalStorage()
+      // 确保只保留一个标签页
+      if (tabs.length === 0 || tabs.length > 1) {
+        tabs = [{ id: Date.now().toString(), title: '文档', content: '' }]
+        saveTabsToLocalStorage()
       }
-    });
+      renderTabs()
+      switchTab(tabs[0].id)
 
-    function updateLineHighlight() {
-      if (!textAreaEl) return;
+      // 添加文本域拉伸功能
+      let isResizing = false;
+      let startY, startHeight;
 
-      // 获取文本域样式
-      const style = window.getComputedStyle(textAreaEl);
-      const lineHeight = isNaN(parseInt(style.lineHeight)) ? 19 : parseInt(style.lineHeight);
-      const paddingTop = parseInt(style.paddingTop);
-      const paddingLeft = parseInt(style.paddingLeft);
-      const paddingRight = parseInt(style.paddingRight);
+      textareaResizer.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        startY = e.clientY;
+        startHeight = textAreaEl.offsetHeight;
+        document.body.style.cursor = 'ns-resize';
+        textAreaEl.style.userSelect = 'none';
+      });
 
-      // 获取当前光标位置并计算行号
-      const cursorPos = textAreaEl.selectionStart;
-      const textContent = textAreaEl.value;
-      const lines = textContent.split('\n');
-      const lineNumber = textContent.substring(0, cursorPos).split('\n').length;
+      document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+        const deltaY = e.clientY - startY;
+        const newHeight = Math.max(100, startHeight + deltaY); // 最小高度100px
+        textAreaEl.style.height = `${newHeight}px`;
+      });
 
-      // 获取当前行内容，用于计算内容宽度
-      const currentLine = lines[lineNumber - 1] || '';
-
-      // 计算当前行位置，并减去垂直滚动偏移量
-      const topPosition = (lineNumber - 1) * lineHeight - textAreaEl.scrollTop;
-
-      // 确保高亮不会超出垂直可视区域
-      const textareaHeight = parseInt(style.height);
-      if (topPosition < 0 || topPosition + lineHeight > textareaHeight) {
-        lineHighlight.style.display = 'none';
-        return;
-      }
-
-      // 创建临时元素计算文本宽度
-      let textWidth = 0;
-      if (currentLine.length > 0) {
-        const tempSpan = document.createElement('span');
-        tempSpan.style.visibility = 'hidden';
-        tempSpan.style.position = 'absolute';
-        tempSpan.style.whiteSpace = 'nowrap';
-        tempSpan.style.font = style.font;
-        tempSpan.textContent = currentLine;
-        document.body.appendChild(tempSpan);
-        textWidth = tempSpan.offsetWidth;
-        document.body.removeChild(tempSpan);
-      }
-
-      // 计算文本宽度 + 左右内边距
-      const totalWidth = textWidth + paddingLeft + paddingRight;
-      const textAreaWidth = textAreaEl.clientWidth;
-
-      // 更新高亮位置和大小
-      lineHighlight.style.display = 'block';
-      lineHighlight.style.top = `${topPosition + paddingTop}px`;
-      lineHighlight.style.height = `${lineHeight}px`;
-      lineHighlight.style.left = `${paddingLeft - textAreaEl.scrollLeft}px`;
-      lineHighlight.style.width = `${Math.max(textAreaWidth - paddingLeft - paddingRight, totalWidth)}px`;
-    }
-
-    // 添加鼠标移动和滚动事件监听
-    textAreaEl.addEventListener('input', updateLineHighlight);
-    textAreaEl.addEventListener('selectionchange', updateLineHighlight);
-    textAreaEl.addEventListener('keydown', (e) => {
-      // 处理箭头键导航时的高亮更新
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End'].includes(e.key)) {
-        setTimeout(updateLineHighlight, 0);
-      }
-    });
-    textAreaEl.addEventListener('scroll', updateLineHighlight);
-
-    // 专门处理水平滚动事件
-    textAreaEl.addEventListener('scroll', function(e) {
-      // 更新高亮的水平位置以匹配滚动
-      if (lineHighlight.style.display === 'block') {
-        const style = window.getComputedStyle(textAreaEl);
-        const paddingLeft = parseInt(style.paddingLeft);
-        lineHighlight.style.left = `${paddingLeft - textAreaEl.scrollLeft}px`;
-      }
-    });
-
-    // 初始化时隐藏高亮，获得焦点时显示
-    lineHighlight.style.display = 'none';
-    textAreaEl.addEventListener('focus', () => {
-      lineHighlight.style.display = 'block';
-      updateLineHighlight();
-    });
-    textAreaEl.addEventListener('blur', () => {
-      lineHighlight.style.display = 'none';
-    });
-
-    // Event Listeners
-    actionButtonEl.addEventListener('click', startCountdown)
-    // 移除新增/删除按钮事件监听
-    textAreaEl.addEventListener('input', saveTabContent)
-    // 添加通用滚动处理（针对非列表情况）
-    textAreaEl.addEventListener('input', function () {
-      // 使用通用的滚动处理函数，确保光标可见
-      ensureCursorVisible(textAreaEl);
-    });
-    // 添加Markdown列表自动完成功能
-    textAreaEl.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        const startPos = textAreaEl.selectionStart;
-        const endPos = textAreaEl.selectionEnd;
-        const text = textAreaEl.value;
-        const beforeText = text.substring(0, startPos);
-        const afterText = text.substring(endPos);
-        const lineStart = beforeText.lastIndexOf('\n') + 1;
-        const currentLine = beforeText.substring(lineStart);
-
-        // 匹配有序列表 (如: 1. ) - 允许后面有内容
-        const orderedListMatch = currentLine.match(/^(\d+)\.\s+/);
-        // 匹配无序列表 (如: - 或 * ) - 允许后面有内容
-        const unorderedListMatch = currentLine.match(/^([-\*])\s+/);
-
-        if (orderedListMatch) {
-          e.preventDefault();
-          const nextNumber = parseInt(orderedListMatch[1]) + 1;
-          textAreaEl.value = beforeText + '\n' + nextNumber + '. ' + afterText;
-          textAreaEl.selectionStart = textAreaEl.selectionEnd = startPos + nextNumber.toString().length + 3;
-          // 确保光标位置可见，而不是强制滚动到底部
-          ensureCursorVisible(textAreaEl);
-        } else if (unorderedListMatch) {
-          e.preventDefault();
-          textAreaEl.value = beforeText + '\n' + unorderedListMatch[1] + ' ' + afterText;
-          textAreaEl.selectionStart = textAreaEl.selectionEnd = startPos + 3;
-          // 确保光标位置可见，而不是强制滚动到底部
-          ensureCursorVisible(textAreaEl);
+      document.addEventListener('mouseup', () => {
+        if (isResizing) {
+          isResizing = false;
+          document.body.style.cursor = '';
+          textAreaEl.style.userSelect = '';
         }
+      });
+
+      function updateLineHighlight() {
+        if (!textAreaEl) return;
+
+        // 获取文本域样式
+        const style = window.getComputedStyle(textAreaEl);
+        const lineHeight = isNaN(parseInt(style.lineHeight)) ? 19 : parseInt(style.lineHeight);
+        const paddingTop = parseInt(style.paddingTop);
+        const paddingLeft = parseInt(style.paddingLeft);
+        const paddingRight = parseInt(style.paddingRight);
+
+        // 获取当前光标位置并计算行号
+        const cursorPos = textAreaEl.selectionStart;
+        const textContent = textAreaEl.value;
+        const lines = textContent.split('\n');
+        const lineNumber = textContent.substring(0, cursorPos).split('\n').length;
+
+        // 获取当前行内容，用于计算内容宽度
+        const currentLine = lines[lineNumber - 1] || '';
+
+        // 计算当前行位置，并减去垂直滚动偏移量
+        const topPosition = (lineNumber - 1) * lineHeight - textAreaEl.scrollTop;
+
+        // 确保高亮不会超出垂直可视区域
+        const textareaHeight = parseInt(style.height);
+        if (topPosition < 0 || topPosition + lineHeight > textareaHeight) {
+          lineHighlight.style.display = 'none';
+          return;
+        }
+
+        // 创建临时元素计算文本宽度
+        let textWidth = 0;
+        if (currentLine.length > 0) {
+          const tempSpan = document.createElement('span');
+          tempSpan.style.visibility = 'hidden';
+          tempSpan.style.position = 'absolute';
+          tempSpan.style.whiteSpace = 'nowrap';
+          tempSpan.style.font = style.font;
+          tempSpan.textContent = currentLine;
+          document.body.appendChild(tempSpan);
+          textWidth = tempSpan.offsetWidth;
+          document.body.removeChild(tempSpan);
+        }
+
+        // 计算文本宽度 + 左右内边距
+        const totalWidth = textWidth + paddingLeft + paddingRight;
+        const textAreaWidth = textAreaEl.clientWidth;
+
+        // 更新高亮位置和大小
+        lineHighlight.style.display = 'block';
+        lineHighlight.style.top = `${topPosition + paddingTop}px`;
+        lineHighlight.style.height = `${lineHeight}px`;
+        lineHighlight.style.left = `${paddingLeft - textAreaEl.scrollLeft}px`;
+        lineHighlight.style.width = `${Math.max(textAreaWidth - paddingLeft - paddingRight, totalWidth)}px`;
       }
-    });
-  }
 
-  // 移除新增/删除标签页函数
-  function switchTab(tabId) {
-    const tab = tabs.find((t) => t.id === tabId)
-    if (!tab) return
+      // 添加鼠标移动和滚动事件监听
+      textAreaEl.addEventListener('input', updateLineHighlight);
+      textAreaEl.addEventListener('selectionchange', updateLineHighlight);
+      textAreaEl.addEventListener('keydown', (e) => {
+        // 处理箭头键导航时的高亮更新
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End'].includes(e.key)) {
+          setTimeout(updateLineHighlight, 0);
+        }
+      });
+      textAreaEl.addEventListener('scroll', updateLineHighlight);
 
-    activeTabId = tabId
-    saveActiveTabToLocalStorage()
-    textAreaEl.value = tab.content
+      // 专门处理水平滚动事件
+      textAreaEl.addEventListener('scroll', function (e) {
+        // 更新高亮的水平位置以匹配滚动
+        if (lineHighlight.style.display === 'block') {
+          const style = window.getComputedStyle(textAreaEl);
+          const paddingLeft = parseInt(style.paddingLeft);
+          lineHighlight.style.left = `${paddingLeft - textAreaEl.scrollLeft}px`;
+        }
+      });
 
-    // Update active tab button
-    document.querySelectorAll('.tab-button').forEach((btn) => {
-      btn.classList.toggle('active', btn.dataset.tabId === tabId)
-    })
-  }
+      // 初始化时隐藏高亮，获得焦点时显示
+      lineHighlight.style.display = 'none';
+      textAreaEl.addEventListener('focus', () => {
+        lineHighlight.style.display = 'block';
+        updateLineHighlight();
+      });
+      textAreaEl.addEventListener('blur', () => {
+        lineHighlight.style.display = 'none';
+      });
 
-  function saveTabContent() {
-    const tabIndex = tabs.findIndex((t) => t.id === activeTabId)
-    if (tabIndex !== -1) {
-      tabs[tabIndex].content = textAreaEl.value
-      saveTabsToLocalStorage()
+      // Event Listeners
+      actionButtonEl.addEventListener('click', startCountdown)
+      // 移除新增/删除按钮事件监听
+      textAreaEl.addEventListener('input', saveTabContent)
+      // 添加通用滚动处理（针对非列表情况）
+      textAreaEl.addEventListener('input', function () {
+        // 使用通用的滚动处理函数，确保光标可见
+        ensureCursorVisible(textAreaEl);
+      });
+      // 添加Markdown列表自动完成功能
+      textAreaEl.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          const startPos = textAreaEl.selectionStart;
+          const endPos = textAreaEl.selectionEnd;
+          const text = textAreaEl.value;
+          const beforeText = text.substring(0, startPos);
+          const afterText = text.substring(endPos);
+          const lineStart = beforeText.lastIndexOf('\n') + 1;
+          const currentLine = beforeText.substring(lineStart);
+
+          // 匹配有序列表 (如: 1. ) - 允许后面有内容
+          const orderedListMatch = currentLine.match(/^(\d+)\.\s+/);
+          // 匹配无序列表 (如: - 或 * ) - 允许后面有内容
+          const unorderedListMatch = currentLine.match(/^([-\*])\s+/);
+
+          if (orderedListMatch) {
+            e.preventDefault();
+            const nextNumber = parseInt(orderedListMatch[1]) + 1;
+            textAreaEl.value = beforeText + '\n' + nextNumber + '. ' + afterText;
+            textAreaEl.selectionStart = textAreaEl.selectionEnd = startPos + nextNumber.toString().length + 3;
+            // 确保光标位置可见，而不是强制滚动到底部
+            ensureCursorVisible(textAreaEl);
+          } else if (unorderedListMatch) {
+            e.preventDefault();
+            textAreaEl.value = beforeText + '\n' + unorderedListMatch[1] + ' ' + afterText;
+            textAreaEl.selectionStart = textAreaEl.selectionEnd = startPos + 3;
+            // 确保光标位置可见，而不是强制滚动到底部
+            ensureCursorVisible(textAreaEl);
+          }
+        }
+      });
     }
-  }
 
-  function renderTabs() {
-    tabButtonsEl.innerHTML = '';
+    // 移除新增/删除标签页函数
+    function switchTab(tabId) {
+      const tab = tabs.find((t) => t.id === tabId)
+      if (!tab) return
 
-    tabs.forEach((tab) => {
-      const button = document.createElement('button');
-      button.className = `tab-button ${tab.id === activeTabId ? 'active' : ''}`;
-      button.dataset.tabId = tab.id;
-      button.textContent = tab.title;
+      activeTabId = tabId
+      saveActiveTabToLocalStorage()
+      textAreaEl.value = tab.content
 
-      // 添加关闭按钮
-      const closeBtn = document.createElement('span');
-      closeBtn.className = 'tab-close-btn';
-      closeBtn.textContent = '×'; // 使用×符号作为关闭图标
-      button.appendChild(closeBtn);
+      // Update active tab button
+      document.querySelectorAll('.tab-button').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.tabId === tabId)
+      })
+    }
 
-      button.addEventListener('click', () => switchTab(tab.id));
-      button.addEventListener('dblclick', () => renameTab(tab.id));
-      tabButtonsEl.appendChild(button);
-    });
-  }
-
-  // 修改: 双击重命名标签页功能
-  function renameTab(tabId) {
-    const tab = tabs.find(t => t.id === tabId);
-    if (!tab) return;
-
-    // 获取当前tab按钮元素
-    const tabButton = document.querySelector(`.tab-button[data-tab-id="${tabId}"]`);
-    if (!tabButton) return;
-
-    // 保存原始标题文本和关闭按钮
-    const originalTitle = tab.title;
-    const closeButton = tabButton.querySelector('.tab-close-btn');
-    const originalContent = tabButton.innerHTML;
-
-    // 创建输入框元素
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.value = originalTitle;
-    input.className = 'tab-rename-input';
-    input.style.width = '80px';
-    input.style.padding = '2px 4px';
-    input.style.border = '1px solid #007bff';
-    input.style.borderRadius = '2px';
-
-    // 清空按钮内容并添加输入框
-    tabButton.innerHTML = '';
-    tabButton.appendChild(input);
-    tabButton.appendChild(closeButton);
-
-    // 聚焦输入框并选中文本
-    input.focus();
-    input.select();
-
-    // 处理失去焦点事件
-    const handleBlur = () => {
-      const newTitle = input.value.trim();
-      if (newTitle && newTitle !== originalTitle) {
-        tab.title = newTitle;
-        saveTabsToLocalStorage();
-        renderTabs();
-        switchTab(activeTabId);
-      } else {
-        // 恢复原始内容
-        tabButton.innerHTML = originalContent;
+    function saveTabContent() {
+      const tabIndex = tabs.findIndex((t) => t.id === activeTabId)
+      if (tabIndex !== -1) {
+        tabs[tabIndex].content = textAreaEl.value
+        saveTabsToLocalStorage()
       }
-      cleanupEvents();
-    };
+    }
 
-    // 处理回车事件
-    const handleKeyDown = (e) => {
-      if (e.key === 'Enter') {
-        handleBlur();
-      } else if (e.key === 'Escape') {
-        // 按ESC键取消编辑
-        tabButton.innerHTML = originalContent;
+    function renderTabs() {
+      tabButtonsEl.innerHTML = '';
+
+      tabs.forEach((tab) => {
+        const button = document.createElement('button');
+        button.className = `tab-button ${tab.id === activeTabId ? 'active' : ''}`;
+        button.dataset.tabId = tab.id;
+        button.textContent = tab.title;
+
+        // 添加关闭按钮
+        const closeBtn = document.createElement('span');
+        closeBtn.className = 'tab-close-btn';
+        closeBtn.textContent = '×'; // 使用×符号作为关闭图标
+        button.appendChild(closeBtn);
+
+        button.addEventListener('click', () => switchTab(tab.id));
+        button.addEventListener('dblclick', () => renameTab(tab.id));
+        tabButtonsEl.appendChild(button);
+      });
+    }
+
+    // 修改: 双击重命名标签页功能
+    function renameTab(tabId) {
+      const tab = tabs.find(t => t.id === tabId);
+      if (!tab) return;
+
+      // 获取当前tab按钮元素
+      const tabButton = document.querySelector(`.tab-button[data-tab-id="${tabId}"]`);
+      if (!tabButton) return;
+
+      // 保存原始标题文本和关闭按钮
+      const originalTitle = tab.title;
+      const closeButton = tabButton.querySelector('.tab-close-btn');
+      const originalContent = tabButton.innerHTML;
+
+      // 创建输入框元素
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = originalTitle;
+      input.className = 'tab-rename-input';
+      input.style.width = '80px';
+      input.style.padding = '2px 4px';
+      input.style.border = '1px solid #007bff';
+      input.style.borderRadius = '2px';
+
+      // 清空按钮内容并添加输入框
+      tabButton.innerHTML = '';
+      tabButton.appendChild(input);
+      tabButton.appendChild(closeButton);
+
+      // 聚焦输入框并选中文本
+      input.focus();
+      input.select();
+
+      // 处理失去焦点事件
+      const handleBlur = () => {
+        const newTitle = input.value.trim();
+        if (newTitle && newTitle !== originalTitle) {
+          tab.title = newTitle;
+          saveTabsToLocalStorage();
+          renderTabs();
+          switchTab(activeTabId);
+        } else {
+          // 恢复原始内容
+          tabButton.innerHTML = originalContent;
+        }
         cleanupEvents();
+      };
+
+      // 处理回车事件
+      const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+          handleBlur();
+        } else if (e.key === 'Escape') {
+          // 按ESC键取消编辑
+          tabButton.innerHTML = originalContent;
+          cleanupEvents();
+        }
+      };
+
+      // 清理事件监听
+      const cleanupEvents = () => {
+        input.removeEventListener('blur', handleBlur);
+        input.removeEventListener('keydown', handleKeyDown);
+      };
+
+      // 添加事件监听
+      input.addEventListener('blur', handleBlur);
+      input.addEventListener('keydown', handleKeyDown);
+    }
+
+    function formatTime(seconds) {
+      // 确保秒数不为负数
+      seconds = Math.max(0, seconds);
+
+      const h = Math.floor(seconds / 3600)
+        .toString()
+        .padStart(2, '0')
+      const m = Math.floor((seconds % 3600) / 60)
+        .toString()
+        .padStart(2, '0')
+      const s = (seconds % 60).toString().padStart(2, '0')
+      return `${h}:${m}:${s}`
+    }
+
+    // Local Storage
+    function saveTabsToLocalStorage() {
+      localStorage.setItem('tabsData', JSON.stringify(tabs))
+    }
+
+    function loadTabsFromLocalStorage() {
+      const saved = localStorage.getItem('tabsData')
+      if (saved) {
+        tabs = JSON.parse(saved)
       }
-    };
-
-    // 清理事件监听
-    const cleanupEvents = () => {
-      input.removeEventListener('blur', handleBlur);
-      input.removeEventListener('keydown', handleKeyDown);
-    };
-
-    // 添加事件监听
-    input.addEventListener('blur', handleBlur);
-    input.addEventListener('keydown', handleKeyDown);
-  }
-
-  function formatTime(seconds) {
-    // 确保秒数不为负数
-    seconds = Math.max(0, seconds);
-
-    const h = Math.floor(seconds / 3600)
-      .toString()
-      .padStart(2, '0')
-    const m = Math.floor((seconds % 3600) / 60)
-      .toString()
-      .padStart(2, '0')
-    const s = (seconds % 60).toString().padStart(2, '0')
-    return `${h}:${m}:${s}`
-  }
-
-  // Local Storage
-  function saveTabsToLocalStorage() {
-    localStorage.setItem('tabsData', JSON.stringify(tabs))
-  }
-
-  function loadTabsFromLocalStorage() {
-    const saved = localStorage.getItem('tabsData')
-    if (saved) {
-      tabs = JSON.parse(saved)
-    }
-  }
-
-  // 新增: 保存和加载活跃标签页ID
-  function saveActiveTabToLocalStorage() {
-    localStorage.setItem('activeTabId', activeTabId);
-  }
-
-  // Countdown Functionality
-  function startCountdown() {
-    // 切换按钮 icon
-    actionButtonEl.firstElementChild.style.display = 'none'
-    actionButtonEl.lastElementChild.style.display = 'block'
-
-    // 重置倒计时到初始值
-    remainingTime = 10;
-    countdownEl.textContent = formatTime(remainingTime);
-
-    // 聚焦文本域
-    textAreaEl.focus()
-
-    // 如果文本域为空，添加一些默认内容
-    if (!textAreaEl.value.trim()) {
-      const today = new Date();
-      const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
-      textAreaEl.value = `# 今日笔记 ${formattedDate}\n\n1. 事项一\n2. 事项二\n\n## 笔记内容\n- 要点一\n- 要点二\n\n`;
-
-      // 保存到当前标签页
-      saveTabContent();
-    } else {
-      // 触发文本区域内容的重新渲染，确保视图更新
-      const currentValue = textAreaEl.value;
-      // 下面这行代码用于强制刷新视图，但不会改变内容
-      textAreaEl.value = currentValue;
     }
 
-    // 将光标和滚动条移动到底部
-    moveToBottom(textAreaEl);
+    // 新增: 保存和加载活跃标签页ID
+    function saveActiveTabToLocalStorage() {
+      localStorage.setItem('activeTabId', activeTabId);
+    }
 
-    // 清除之前的定时器
-    if (countdownInterval) clearInterval(countdownInterval)
+    // Countdown Functionality
+    function startCountdown() {
+      // 切换按钮 icon
+      actionButtonEl.firstElementChild.style.display = 'none'
+      actionButtonEl.lastElementChild.style.display = 'block'
 
-    // 设置新的定时器
-    countdownInterval = setInterval(() => {
-      remainingTime--;
-
-      // 确保时间不会变为负数
-      if (remainingTime < 0) remainingTime = 0;
-
+      // 重置倒计时到初始值
+      remainingTime = 10;
       countdownEl.textContent = formatTime(remainingTime);
 
-      if (remainingTime <= 0) {
-        clearInterval(countdownInterval);
-        countdownInterval = null; // 明确设置为null，避免多次清除
+      // 聚焦文本域
+      textAreaEl.focus()
 
-        // 按钮 icon 切换
-        actionButtonEl.firstElementChild.style.display = 'block';
-        actionButtonEl.lastElementChild.style.display = 'none';
+      // 如果文本域为空，添加一些默认内容
+      if (!textAreaEl.value.trim()) {
+        const today = new Date();
+        const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+        textAreaEl.value = `# 今日笔记 ${formattedDate}\n\n1. 事项一\n2. 事项二\n\n## 笔记内容\n- 要点一\n- 要点二\n\n`;
 
-        // 倒计时结束时不移动光标，保持当前位置
+        // 保存到当前标签页
+        saveTabContent();
+      } else {
+        // 触发文本区域内容的重新渲染，确保视图更新
+        const currentValue = textAreaEl.value;
+        // 下面这行代码用于强制刷新视图，但不会改变内容
+        textAreaEl.value = currentValue;
       }
-    }, 1000)
-  }
 
-  // 确保光标在可视区域内的函数
-  function ensureCursorVisible(textArea) {
-    const cursorPos = textArea.selectionStart;
-    const textContent = textArea.value;
-    const style = window.getComputedStyle(textArea);
-    const lineHeight = parseInt(style.lineHeight) || 19;
-    const fontSize = parseInt(style.fontSize) || 16;
+      // 将光标和滚动条移动到底部
+      moveToBottom(textAreaEl);
 
-    // 计算光标位置的行号
-    const beforeCursor = textContent.substring(0, cursorPos);
-    const lines = textContent.split('\n');
-    const lineNumber = beforeCursor.split('\n').length;
+      // 清除之前的定时器
+      if (countdownInterval) clearInterval(countdownInterval)
 
-    // 计算当前光标位置（垂直）
-    const cursorTop = (lineNumber - 1) * lineHeight;
+      // 设置新的定时器
+      countdownInterval = setInterval(() => {
+        remainingTime--;
 
-    // 获取文本区域的可视区域尺寸和当前滚动位置
-    const visibleHeight = textArea.clientHeight;
-    const visibleWidth = textArea.clientWidth;
-    const currentScrollTop = textArea.scrollTop;
-    const currentScrollLeft = textArea.scrollLeft;
+        // 确保时间不会变为负数
+        if (remainingTime < 0) remainingTime = 0;
 
-    // 垂直滚动处理
-    if (cursorTop < currentScrollTop) {
-      // 光标在可视区域上方，向上滚动
-      textArea.scrollTop = cursorTop;
-    } else if (cursorTop > currentScrollTop + visibleHeight - lineHeight * 2) {
-      // 光标在可视区域下方，向下滚动，但保留几行上下文
-      textArea.scrollTop = cursorTop - visibleHeight + lineHeight * 2;
+        countdownEl.textContent = formatTime(remainingTime);
+
+        if (remainingTime <= 0) {
+          clearInterval(countdownInterval);
+          countdownInterval = null; // 明确设置为null，避免多次清除
+
+          // 按钮 icon 切换
+          actionButtonEl.firstElementChild.style.display = 'block';
+          actionButtonEl.lastElementChild.style.display = 'none';
+
+          // 倒计时结束时不移动光标，保持当前位置
+        }
+      }, 1000)
     }
 
-    // 水平滚动处理 - 计算当前行光标的水平位置
-    const currentLineIndex = lineNumber - 1;
-    if (currentLineIndex >= 0 && currentLineIndex < lines.length) {
-      const currentLine = lines[currentLineIndex];
-      // 计算光标在当前行的字符位置
-      const lineStartPos = beforeCursor.lastIndexOf('\n') + 1;
-      const cursorPosInLine = cursorPos - lineStartPos;
+    // 确保光标在可视区域内的函数
+    function ensureCursorVisible(textArea) {
+      const cursorPos = textArea.selectionStart;
+      const textContent = textArea.value;
+      const style = window.getComputedStyle(textArea);
+      const lineHeight = parseInt(style.lineHeight) || 19;
+      const fontSize = parseInt(style.fontSize) || 16;
 
-      // 创建临时元素计算光标前文本的宽度
-      let textBeforeCursor = currentLine.substring(0, cursorPosInLine);
-      let textWidth = 0;
+      // 计算光标位置的行号
+      const beforeCursor = textContent.substring(0, cursorPos);
+      const lines = textContent.split('\n');
+      const lineNumber = beforeCursor.split('\n').length;
 
-      if (textBeforeCursor.length > 0) {
-        const tempSpan = document.createElement('span');
-        tempSpan.style.visibility = 'hidden';
-        tempSpan.style.position = 'absolute';
-        tempSpan.style.whiteSpace = 'nowrap';
-        tempSpan.style.font = style.font;
-        tempSpan.textContent = textBeforeCursor;
-        document.body.appendChild(tempSpan);
-        textWidth = tempSpan.offsetWidth;
-        document.body.removeChild(tempSpan);
+      // 计算当前光标位置（垂直）
+      const cursorTop = (lineNumber - 1) * lineHeight;
+
+      // 获取文本区域的可视区域尺寸和当前滚动位置
+      const visibleHeight = textArea.clientHeight;
+      const visibleWidth = textArea.clientWidth;
+      const currentScrollTop = textArea.scrollTop;
+      const currentScrollLeft = textArea.scrollLeft;
+
+      // 垂直滚动处理
+      if (cursorTop < currentScrollTop) {
+        // 光标在可视区域上方，向上滚动
+        textArea.scrollTop = cursorTop;
+      } else if (cursorTop > currentScrollTop + visibleHeight - lineHeight * 2) {
+        // 光标在可视区域下方，向下滚动，但保留几行上下文
+        textArea.scrollTop = cursorTop - visibleHeight + lineHeight * 2;
       }
 
-      const paddingLeft = parseInt(style.paddingLeft) || 0;
-      const cursorHorizontalPos = textWidth + paddingLeft;
+      // 水平滚动处理 - 计算当前行光标的水平位置
+      const currentLineIndex = lineNumber - 1;
+      if (currentLineIndex >= 0 && currentLineIndex < lines.length) {
+        const currentLine = lines[currentLineIndex];
+        // 计算光标在当前行的字符位置
+        const lineStartPos = beforeCursor.lastIndexOf('\n') + 1;
+        const cursorPosInLine = cursorPos - lineStartPos;
 
-      // 确保光标水平位置可见
-      if (cursorHorizontalPos < currentScrollLeft + paddingLeft) {
-        console.log('111 => ')
-        // 光标在可视区域左侧，向左滚动
-        textArea.scrollLeft = cursorHorizontalPos - paddingLeft - 30;
-        // textArea.scrollLeft = 0;
-      } else if (cursorHorizontalPos > currentScrollLeft + visibleWidth - fontSize * 5) {
-        console.log('2222 => ')
-        // 光标在可视区域右侧，向右滚动，但保留一些字符的上下文
-        textArea.scrollLeft = cursorHorizontalPos - visibleWidth + fontSize * 5;
-        // textArea.scrollLeft = 0;
+        // 创建临时元素计算光标前文本的宽度
+        let textBeforeCursor = currentLine.substring(0, cursorPosInLine);
+        let textWidth = 0;
+
+        if (textBeforeCursor.length > 0) {
+          const tempSpan = document.createElement('span');
+          tempSpan.style.visibility = 'hidden';
+          tempSpan.style.position = 'absolute';
+          tempSpan.style.whiteSpace = 'nowrap';
+          tempSpan.style.font = style.font;
+          tempSpan.textContent = textBeforeCursor;
+          document.body.appendChild(tempSpan);
+          textWidth = tempSpan.offsetWidth;
+          document.body.removeChild(tempSpan);
+        }
+
+        const paddingLeft = parseInt(style.paddingLeft) || 0;
+        const cursorHorizontalPos = textWidth + paddingLeft;
+
+        // 确保光标水平位置可见
+        if (cursorHorizontalPos < currentScrollLeft + paddingLeft) {
+          console.log('111 => ')
+          // 光标在可视区域左侧，向左滚动
+          textArea.scrollLeft = cursorHorizontalPos - paddingLeft - 30;
+          // textArea.scrollLeft = 0;
+        } else if (cursorHorizontalPos > currentScrollLeft + visibleWidth - fontSize * 5) {
+          console.log('2222 => ')
+          // 光标在可视区域右侧，向右滚动，但保留一些字符的上下文
+          textArea.scrollLeft = cursorHorizontalPos - visibleWidth + fontSize * 5;
+          // textArea.scrollLeft = 0;
+        }
       }
     }
-  }
 
-  // 将文本区域的光标和滚动条移动到底部的函数
-  function moveToBottom(textArea) {
-    if (!textArea || textArea.value === undefined) return;
+    // 将文本区域的光标和滚动条移动到底部的函数
+    function moveToBottom(textArea) {
+      if (!textArea || textArea.value === undefined) return;
 
-    try {
-      // 保存当前滚动状态
-      const originalScrollTop = textArea.scrollTop;
+      try {
+        // 保存当前滚动状态
+        const originalScrollTop = textArea.scrollTop;
 
-      // 设置光标到文本末尾
-      textArea.setSelectionRange(textArea.value.length, textArea.value.length);
+        // 设置光标到文本末尾
+        textArea.setSelectionRange(textArea.value.length, textArea.value.length);
 
-      // 确保滚动条滚动到底部
-      // 使用两个 setTimeout 确保在浏览器完全渲染后执行滚动
-      setTimeout(() => {
-        // 第一次尝试滚动
-        textArea.scrollTop = textArea.scrollHeight;
-        textArea.scrollLeft = 0; // 重置水平滚动位置
-
-        // 第二次尝试，以防第一次未生效（有时浏览器渲染需要多个微任务循环）
+        // 确保滚动条滚动到底部
+        // 使用两个 setTimeout 确保在浏览器完全渲染后执行滚动
         setTimeout(() => {
-          // 如果第一次尝试后滚动位置没有变化，再次尝试
-          if (textArea.scrollTop === originalScrollTop && textArea.scrollTop < textArea.scrollHeight - textArea.clientHeight) {
-            textArea.scrollTop = textArea.scrollHeight;
-          }
+          // 第一次尝试滚动
+          textArea.scrollTop = textArea.scrollHeight;
+          textArea.scrollLeft = 0; // 重置水平滚动位置
 
-          // 触发输入事件来更新高亮，而不是直接调用updateLineHighlight
-          textArea.dispatchEvent(new Event('input', { bubbles: true }));
+          // 第二次尝试，以防第一次未生效（有时浏览器渲染需要多个微任务循环）
+          setTimeout(() => {
+            // 如果第一次尝试后滚动位置没有变化，再次尝试
+            if (textArea.scrollTop === originalScrollTop && textArea.scrollTop < textArea.scrollHeight - textArea.clientHeight) {
+              textArea.scrollTop = textArea.scrollHeight;
+            }
 
-          // 将焦点重新放在文本区域上，确保可以立即输入
-          textArea.focus();
-        }, 10);
-      }, 0);
-    } catch (error) {
-      console.error("移动光标到底部出错:", error);
+            // 触发输入事件来更新高亮，而不是直接调用updateLineHighlight
+            textArea.dispatchEvent(new Event('input', { bubbles: true }));
+
+            // 将焦点重新放在文本区域上，确保可以立即输入
+            textArea.focus();
+          }, 10);
+        }, 0);
+      } catch (error) {
+        console.error("移动光标到底部出错:", error);
+      }
     }
-  }
 
-  // Start the app
-  init();
+    // Start the app
+    init();
 
-  // 设置文本域高度以填充剩余空间
-  function setTextareaHeight() {
-    const countdown = document.querySelector('.countdown-container');
-    const tabs = document.querySelector('.tab-header');
-    const textarea = document.getElementById('textArea');
-    const container = document.querySelector('.container');
+    // 设置文本域高度以填充剩余空间
+    function setTextareaHeight() {
+      const countdown = document.querySelector('.countdown-container');
+      const tabs = document.querySelector('.tab-header');
+      const textarea = document.getElementById('textArea');
+      const container = document.querySelector('.container');
 
-    if (countdown && tabs && textarea && container) {
-      // 获取各元素高度（包括外边距）
-      const countdownHeight = countdown.offsetHeight + parseInt(getComputedStyle(countdown).marginTop) + parseInt(getComputedStyle(countdown).marginBottom);
-      const tabsHeight = tabs.offsetHeight + parseInt(getComputedStyle(tabs).marginTop) + parseInt(getComputedStyle(tabs).marginBottom);
-      const containerPadding = parseInt(getComputedStyle(container).paddingTop) + parseInt(getComputedStyle(container).paddingBottom);
+      if (countdown && tabs && textarea && container) {
+        // 获取各元素高度（包括外边距）
+        const countdownHeight = countdown.offsetHeight + parseInt(getComputedStyle(countdown).marginTop) + parseInt(getComputedStyle(countdown).marginBottom);
+        const tabsHeight = tabs.offsetHeight + parseInt(getComputedStyle(tabs).marginTop) + parseInt(getComputedStyle(tabs).marginBottom);
+        const containerPadding = parseInt(getComputedStyle(container).paddingTop) + parseInt(getComputedStyle(container).paddingBottom);
 
-      // 计算文本域可用高度
-      const windowHeight = window.innerHeight;
-      const textareaHeight = windowHeight - countdownHeight - tabsHeight - containerPadding - 20; // 额外减去20px作为安全距离
+        // 计算文本域可用高度
+        const windowHeight = window.innerHeight;
+        const textareaHeight = windowHeight - countdownHeight - tabsHeight - containerPadding - 20; // 额外减去20px作为安全距离
 
-      // 设置文本域高度
-      textarea.style.height = `${textareaHeight}px`;
+        // 设置文本域高度
+        textarea.style.height = `${textareaHeight}px`;
+      }
     }
-  }
 
-  // 初始化时设置高度
-  setTextareaHeight();
+    // 初始化时设置高度
+    setTextareaHeight();
 
-  // 窗口大小变化时重新计算
-  window.addEventListener('resize', setTextareaHeight);
+    // 窗口大小变化时重新计算
+    window.addEventListener('resize', setTextareaHeight);
 
-  // 添加窗口大小调整事件处理，确保响应式布局下高亮和光标位置正确
-  window.addEventListener('resize', () => {
-    // 当窗口大小改变时，更新高亮位置
-    updateLineHighlight();
-  });
-</script>
+    // 添加窗口大小调整事件处理，确保响应式布局下高亮和光标位置正确
+    window.addEventListener('resize', () => {
+      // 当窗口大小改变时，更新高亮位置
+      updateLineHighlight();
+    });
+  </script>
 
 </body>
 
